@@ -62,6 +62,7 @@ cargo bench -q 2>&1 |tee benches/report.txt
 
 ```
 cargo build --release
+./bin/last-modified.sh >last-modified.txt
 ```
 
 # `README.md`
