@@ -55,6 +55,7 @@ cargo bench -q 2>&1 |tee benches/report.txt
 
 # `target/release/{dirname}`
 
+* `src/lib.rs`
 * `Cargo.lock`
 * `Cargo.toml`
 * `**/*.rs`
@@ -63,6 +64,14 @@ cargo bench -q 2>&1 |tee benches/report.txt
 ```
 cargo build --release
 ./bin/last-modified.sh >last-modified.txt
+```
+
+# `src/lib.rs`
+
+* `t/lib.rs`
+
+```
+kapow {0} >{target}
 ```
 
 # `README.md`
