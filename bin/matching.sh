@@ -38,5 +38,7 @@ done <UnicodeData.txt
 
 printf "    // Extra:\n"
 printf "    (\"<\", \">\"),\n"
+printf "    (\"'\", \"'\"),\n"
+printf "    (\"\\\\\"\", \"\\\\\"\"),\n"
 printf "];\n"
 

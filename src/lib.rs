@@ -86,6 +86,8 @@ pub const MATCHING: &[(&str, &str)] = &[
     ("｢", "｣"),
     // Extra:
     ("<", ">"),
+    ("'", "'"),
+    ("\"", "\""),
 ];
 
 /// Generate a [`BTreeMap`] with the matching close bracket/quote for each open bracket/quote

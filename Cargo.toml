@@ -1,6 +1,6 @@
 [package]
 name = "unicode-matching"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2021"
 description = "Rust library crate to match open/close Unicode graphemes for brackets/quotes"
 license = "MIT"
