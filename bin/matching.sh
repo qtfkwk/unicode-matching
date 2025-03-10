@@ -13,7 +13,7 @@ cd $(dirname $0)
 
 # Download the data file (if not present)
 if [ ! -e UnicodeData.txt ]; then
-    wget -i http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
+    wget http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
 fi
 
 I=0
