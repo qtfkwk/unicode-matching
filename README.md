@@ -7,6 +7,34 @@ database files.
 - <https://www.unicode.org/Public/UNIDATA/BidiBrackets.txt>
 - <https://www.unicode.org/Public/UNIDATA/BidiMirroring.txt>
 
-Original idea is from <https://stackoverflow.com/a/13535289/21883239> and
-<https://stackoverflow.com/questions/13535172/list-of-all-unicodes-open-close-brackets/13535289#comment53701946_13535289>.
+Original idea is from [this StackOverflow thread](https://stackoverflow.com/a/13535289/21883239) and
+[this comment](https://stackoverflow.com/questions/13535172/list-of-all-unicodes-open-close-brackets/13535289#comment53701946_13535289).
+
+# Example
+
+```rust
+use unicode_matching::FindMatching;
+
+let close = unicode_matching::close();
+let open = unicode_matching::open();
+
+let s = "fn main() {\n    println!(\"Hello!\");\n}";
+//       000000000011 11111111222222 2222333 333 33
+//       012345678901 23456789012345 6789012 345 67
+
+assert_eq!(s.find_matching(7, &close, &open), 8);
+assert_eq!(s.find_matching(8, &close, &open), 7);
+
+assert_eq!(s.find_matching(10, &close, &open), 36);
+assert_eq!(s.find_matching(36, &close, &open), 10);
+
+assert_eq!(s.find_matching(24, &close, &open), 33);
+assert_eq!(s.find_matching(33, &close, &open), 24);
+
+let length = s.len();
+let more = length + 1;
+assert_eq!(s.find_matching(0, &close, &open), 0);
+assert_eq!(s.find_matching(length, &close, &open), length);
+assert_eq!(s.find_matching(more, &close, &open), more);
+```
 
