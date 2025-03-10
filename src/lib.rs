@@ -2,7 +2,7 @@ use gstring::*;
 
 use std::collections::BTreeMap;
 
-/// Full set of matching brackets/quotes
+/// Matching open/close brackets from `UnicodeData.txt`
 pub const MATCHING: &[(&str, &str)] = &[
     ("(", ")"),
     ("[", "]"),
@@ -88,12 +88,16 @@ pub const MATCHING: &[(&str, &str)] = &[
     ("｢", "｣"),
 ];
 
-/// Generate a [`BTreeMap`] with the matching close bracket/quote for each open bracket/quote
+/**
+Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`
+*/
 pub fn close() -> BTreeMap<&'static str, &'static str> {
     MATCHING.iter().cloned().collect()
 }
 
-/// Generate a [`BTreeMap`] with the matching open bracket/quote for each close bracket/quote
+/**
+Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`
+*/
 pub fn open() -> BTreeMap<&'static str, &'static str> {
     MATCHING
         .iter()
@@ -102,9 +106,1260 @@ pub fn open() -> BTreeMap<&'static str, &'static str> {
         .collect()
 }
 
-/// Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets/quotes
+/**
+Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
+`UnicodeData.txt`
+*/
 pub fn matching() -> BTreeMap<&'static str, &'static str> {
     MATCHING
+        .iter()
+        .cloned()
+        .flat_map(|(open, close)| [(open, close), (close, open)])
+        .collect()
+}
+
+/// Matching open/close brackets from `BidiBrackets.txt`
+pub const BRACKETS: &[(&str, &str)] = &[
+    ("(", ")"),
+    ("[", "]"),
+    ("{", "}"),
+    ("༺", "༻"),
+    ("༼", "༽"),
+    ("᚛", "᚜"),
+    ("⁅", "⁆"),
+    ("⁽", "⁾"),
+    ("₍", "₎"),
+    ("⌈", "⌉"),
+    ("⌊", "⌋"),
+    ("〈", "〉"),
+    ("❨", "❩"),
+    ("❪", "❫"),
+    ("❬", "❭"),
+    ("❮", "❯"),
+    ("❰", "❱"),
+    ("❲", "❳"),
+    ("❴", "❵"),
+    ("⟅", "⟆"),
+    ("⟦", "⟧"),
+    ("⟨", "⟩"),
+    ("⟪", "⟫"),
+    ("⟬", "⟭"),
+    ("⟮", "⟯"),
+    ("⦃", "⦄"),
+    ("⦅", "⦆"),
+    ("⦇", "⦈"),
+    ("⦉", "⦊"),
+    ("⦋", "⦌"),
+    ("⦍", "⦐"),
+    ("⦏", "⦎"),
+    ("⦑", "⦒"),
+    ("⦓", "⦔"),
+    ("⦕", "⦖"),
+    ("⦗", "⦘"),
+    ("⧘", "⧙"),
+    ("⧚", "⧛"),
+    ("⧼", "⧽"),
+    ("⸢", "⸣"),
+    ("⸤", "⸥"),
+    ("⸦", "⸧"),
+    ("⸨", "⸩"),
+    ("⹕", "⹖"),
+    ("⹗", "⹘"),
+    ("⹙", "⹚"),
+    ("⹛", "⹜"),
+    ("〈", "〉"),
+    ("《", "》"),
+    ("「", "」"),
+    ("『", "』"),
+    ("【", "】"),
+    ("〔", "〕"),
+    ("〖", "〗"),
+    ("〘", "〙"),
+    ("〚", "〛"),
+    ("﹙", "﹚"),
+    ("﹛", "﹜"),
+    ("﹝", "﹞"),
+    ("（", "）"),
+    ("［", "］"),
+    ("｛", "｝"),
+    ("｟", "｠"),
+    ("｢", "｣"),
+];
+
+/**
+Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `BidiBrackets.txt`
+*/
+pub fn close_brackets() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS.iter().cloned().collect()
+}
+
+/**
+Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `BidiBrackets.txt`
+*/
+pub fn open_brackets() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS
+        .iter()
+        .cloned()
+        .map(|(open, close)| (close, open))
+        .collect()
+}
+
+/**
+Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
+`BidiBrackets.txt`
+*/
+pub fn matching_brackets() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS
+        .iter()
+        .cloned()
+        .flat_map(|(open, close)| [(open, close), (close, open)])
+        .collect()
+}
+
+/// Matching open/close brackets from `BidiMirroring.txt`
+pub const MIRRORING: &[(&str, &str)] = &[
+    ("(", ")"),
+    ("<", ">"),
+    ("[", "]"),
+    ("{", "}"),
+    ("«", "»"),
+    ("༺", "༻"),
+    ("༼", "༽"),
+    ("᚛", "᚜"),
+    ("‹", "›"),
+    ("⁅", "⁆"),
+    ("⁽", "⁾"),
+    ("₍", "₎"),
+    ("∈", "∋"),
+    ("∉", "∌"),
+    ("∊", "∍"),
+    ("∕", "⧵"),
+    ("∟", "⯾"),
+    ("∠", "⦣"),
+    ("∡", "⦛"),
+    ("∢", "⦠"),
+    ("∤", "⫮"),
+    ("∼", "∽"),
+    ("≃", "⋍"),
+    ("≅", "≌"),
+    ("≒", "≓"),
+    ("≔", "≕"),
+    ("≤", "≥"),
+    ("≦", "≧"),
+    ("≨", "≩"),
+    ("≪", "≫"),
+    ("≮", "≯"),
+    ("≰", "≱"),
+    ("≲", "≳"),
+    ("≴", "≵"),
+    ("≶", "≷"),
+    ("≸", "≹"),
+    ("≺", "≻"),
+    ("≼", "≽"),
+    ("≾", "≿"),
+    ("⊀", "⊁"),
+    ("⊂", "⊃"),
+    ("⊄", "⊅"),
+    ("⊆", "⊇"),
+    ("⊈", "⊉"),
+    ("⊊", "⊋"),
+    ("⊏", "⊐"),
+    ("⊑", "⊒"),
+    ("⊘", "⦸"),
+    ("⊢", "⊣"),
+    ("⊦", "⫞"),
+    ("⊨", "⫤"),
+    ("⊩", "⫣"),
+    ("⊫", "⫥"),
+    ("⊰", "⊱"),
+    ("⊲", "⊳"),
+    ("⊴", "⊵"),
+    ("⊶", "⊷"),
+    ("⊸", "⟜"),
+    ("⋉", "⋊"),
+    ("⋋", "⋌"),
+    ("⋐", "⋑"),
+    ("⋖", "⋗"),
+    ("⋘", "⋙"),
+    ("⋚", "⋛"),
+    ("⋜", "⋝"),
+    ("⋞", "⋟"),
+    ("⋠", "⋡"),
+    ("⋢", "⋣"),
+    ("⋤", "⋥"),
+    ("⋦", "⋧"),
+    ("⋨", "⋩"),
+    ("⋪", "⋫"),
+    ("⋬", "⋭"),
+    ("⋰", "⋱"),
+    ("⋲", "⋺"),
+    ("⋳", "⋻"),
+    ("⋴", "⋼"),
+    ("⋶", "⋽"),
+    ("⋷", "⋾"),
+    ("⌈", "⌉"),
+    ("⌊", "⌋"),
+    ("〈", "〉"),
+    ("❨", "❩"),
+    ("❪", "❫"),
+    ("❬", "❭"),
+    ("❮", "❯"),
+    ("❰", "❱"),
+    ("❲", "❳"),
+    ("❴", "❵"),
+    ("⟃", "⟄"),
+    ("⟅", "⟆"),
+    ("⟈", "⟉"),
+    ("⟋", "⟍"),
+    ("⟕", "⟖"),
+    ("⟝", "⟞"),
+    ("⟢", "⟣"),
+    ("⟤", "⟥"),
+    ("⟦", "⟧"),
+    ("⟨", "⟩"),
+    ("⟪", "⟫"),
+    ("⟬", "⟭"),
+    ("⟮", "⟯"),
+    ("⦃", "⦄"),
+    ("⦅", "⦆"),
+    ("⦇", "⦈"),
+    ("⦉", "⦊"),
+    ("⦋", "⦌"),
+    ("⦍", "⦐"),
+    ("⦎", "⦏"),
+    ("⦑", "⦒"),
+    ("⦓", "⦔"),
+    ("⦕", "⦖"),
+    ("⦗", "⦘"),
+    ("⦤", "⦥"),
+    ("⦨", "⦩"),
+    ("⦪", "⦫"),
+    ("⦬", "⦭"),
+    ("⦮", "⦯"),
+    ("⧀", "⧁"),
+    ("⧄", "⧅"),
+    ("⧏", "⧐"),
+    ("⧑", "⧒"),
+    ("⧔", "⧕"),
+    ("⧘", "⧙"),
+    ("⧚", "⧛"),
+    ("⧨", "⧩"),
+    ("⧸", "⧹"),
+    ("⧼", "⧽"),
+    ("⨫", "⨬"),
+    ("⨭", "⨮"),
+    ("⨴", "⨵"),
+    ("⨼", "⨽"),
+    ("⩤", "⩥"),
+    ("⩹", "⩺"),
+    ("⩻", "⩼"),
+    ("⩽", "⩾"),
+    ("⩿", "⪀"),
+    ("⪁", "⪂"),
+    ("⪃", "⪄"),
+    ("⪅", "⪆"),
+    ("⪇", "⪈"),
+    ("⪉", "⪊"),
+    ("⪋", "⪌"),
+    ("⪍", "⪎"),
+    ("⪏", "⪐"),
+    ("⪑", "⪒"),
+    ("⪓", "⪔"),
+    ("⪕", "⪖"),
+    ("⪗", "⪘"),
+    ("⪙", "⪚"),
+    ("⪛", "⪜"),
+    ("⪝", "⪞"),
+    ("⪟", "⪠"),
+    ("⪡", "⪢"),
+    ("⪦", "⪧"),
+    ("⪨", "⪩"),
+    ("⪪", "⪫"),
+    ("⪬", "⪭"),
+    ("⪯", "⪰"),
+    ("⪱", "⪲"),
+    ("⪳", "⪴"),
+    ("⪵", "⪶"),
+    ("⪷", "⪸"),
+    ("⪹", "⪺"),
+    ("⪻", "⪼"),
+    ("⪽", "⪾"),
+    ("⪿", "⫀"),
+    ("⫁", "⫂"),
+    ("⫃", "⫄"),
+    ("⫅", "⫆"),
+    ("⫇", "⫈"),
+    ("⫉", "⫊"),
+    ("⫋", "⫌"),
+    ("⫍", "⫎"),
+    ("⫏", "⫐"),
+    ("⫑", "⫒"),
+    ("⫓", "⫔"),
+    ("⫕", "⫖"),
+    ("⫬", "⫭"),
+    ("⫷", "⫸"),
+    ("⫹", "⫺"),
+    ("⸂", "⸃"),
+    ("⸄", "⸅"),
+    ("⸉", "⸊"),
+    ("⸌", "⸍"),
+    ("⸜", "⸝"),
+    ("⸠", "⸡"),
+    ("⸢", "⸣"),
+    ("⸤", "⸥"),
+    ("⸦", "⸧"),
+    ("⸨", "⸩"),
+    ("⹕", "⹖"),
+    ("⹗", "⹘"),
+    ("⹙", "⹚"),
+    ("⹛", "⹜"),
+    ("〈", "〉"),
+    ("《", "》"),
+    ("「", "」"),
+    ("『", "』"),
+    ("【", "】"),
+    ("〔", "〕"),
+    ("〖", "〗"),
+    ("〘", "〙"),
+    ("〚", "〛"),
+    ("﹙", "﹚"),
+    ("﹛", "﹜"),
+    ("﹝", "﹞"),
+    ("﹤", "﹥"),
+    ("（", "）"),
+    ("＜", "＞"),
+    ("［", "］"),
+    ("｛", "｝"),
+    ("｟", "｠"),
+    ("｢", "｣"),
+];
+
+/**
+Generate a [`BTreeMap`] with the matching close bracket for each open bracket in
+`BidiMirroring.txt`
+*/
+pub fn close_mirroring() -> BTreeMap<&'static str, &'static str> {
+    MIRRORING.iter().cloned().collect()
+}
+
+/**
+Generate a [`BTreeMap`] with the matching open bracket for each close bracket in
+`BidiMirroring.txt`
+*/
+pub fn open_mirroring() -> BTreeMap<&'static str, &'static str> {
+    MIRRORING
+        .iter()
+        .cloned()
+        .map(|(open, close)| (close, open))
+        .collect()
+}
+
+/**
+Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
+`BidiMirroring.txt`
+*/
+pub fn matching_mirroring() -> BTreeMap<&'static str, &'static str> {
+    MIRRORING
+        .iter()
+        .cloned()
+        .flat_map(|(open, close)| [(open, close), (close, open)])
+        .collect()
+}
+
+/// Matching open/close brackets from `UnicodeData.txt` and `BidiBrackets.txt`
+pub const BRACKETS_MATCHING: &[(&str, &str)] = &[
+    ("(", ")"),
+    ("[", "]"),
+    ("{", "}"),
+    ("«", "»"),
+    ("༺", "༻"),
+    ("༼", "༽"),
+    ("᚛", "᚜"),
+    ("‘", "’"),
+    ("“", "”"),
+    ("‹", "›"),
+    ("⁅", "⁆"),
+    ("⁽", "⁾"),
+    ("₍", "₎"),
+    ("⌈", "⌉"),
+    ("⌊", "⌋"),
+    ("〈", "〉"),
+    ("❨", "❩"),
+    ("❪", "❫"),
+    ("❬", "❭"),
+    ("❮", "❯"),
+    ("❰", "❱"),
+    ("❲", "❳"),
+    ("❴", "❵"),
+    ("⟅", "⟆"),
+    ("⟦", "⟧"),
+    ("⟨", "⟩"),
+    ("⟪", "⟫"),
+    ("⟬", "⟭"),
+    ("⟮", "⟯"),
+    ("⦃", "⦄"),
+    ("⦅", "⦆"),
+    ("⦇", "⦈"),
+    ("⦉", "⦊"),
+    ("⦋", "⦌"),
+    ("⦍", "⦎"),
+    ("⦏", "⦐"),
+    ("⦑", "⦒"),
+    ("⦓", "⦔"),
+    ("⦕", "⦖"),
+    ("⦗", "⦘"),
+    ("⧘", "⧙"),
+    ("⧚", "⧛"),
+    ("⧼", "⧽"),
+    ("⸂", "⸃"),
+    ("⸄", "⸅"),
+    ("⸉", "⸊"),
+    ("⸌", "⸍"),
+    ("⸜", "⸝"),
+    ("⸠", "⸡"),
+    ("⸢", "⸣"),
+    ("⸤", "⸥"),
+    ("⸦", "⸧"),
+    ("⸨", "⸩"),
+    ("⹕", "⹖"),
+    ("⹗", "⹘"),
+    ("⹙", "⹚"),
+    ("⹛", "⹜"),
+    ("〈", "〉"),
+    ("《", "》"),
+    ("「", "」"),
+    ("『", "』"),
+    ("【", "】"),
+    ("〔", "〕"),
+    ("〖", "〗"),
+    ("〘", "〙"),
+    ("〚", "〛"),
+    ("﴾", "﴿"),
+    ("︗", "︘"),
+    ("︵", "︶"),
+    ("︷", "︸"),
+    ("︹", "︺"),
+    ("︻", "︼"),
+    ("︽", "︾"),
+    ("︿", "﹀"),
+    ("﹁", "﹂"),
+    ("﹃", "﹄"),
+    ("﹇", "﹈"),
+    ("﹙", "﹚"),
+    ("﹛", "﹜"),
+    ("﹝", "﹞"),
+    ("（", "）"),
+    ("［", "］"),
+    ("｛", "｝"),
+    ("｟", "｠"),
+    ("｢", "｣"),
+];
+
+/**
+Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`
+and `BidiBrackets.txt`
+*/
+pub fn close_brackets_matching() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS_MATCHING.iter().cloned().collect()
+}
+
+/**
+Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`
+and `BidiBrackets.txt`
+*/
+pub fn open_brackets_matching() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS_MATCHING
+        .iter()
+        .cloned()
+        .map(|(open, close)| (close, open))
+        .collect()
+}
+
+/**
+Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
+`UnicodeData.txt` and `BidiBrackets.txt`
+*/
+pub fn matching_brackets_matching() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS_MATCHING
+        .iter()
+        .cloned()
+        .flat_map(|(open, close)| [(open, close), (close, open)])
+        .collect()
+}
+
+/// Matching open/close brackets from `BidiMirroring.txt` and `BidiBrackets.txt`
+pub const BRACKETS_MIRRORING: &[(&str, &str)] = &[
+    ("(", ")"),
+    ("<", ">"),
+    ("[", "]"),
+    ("{", "}"),
+    ("«", "»"),
+    ("༺", "༻"),
+    ("༼", "༽"),
+    ("᚛", "᚜"),
+    ("‹", "›"),
+    ("⁅", "⁆"),
+    ("⁽", "⁾"),
+    ("₍", "₎"),
+    ("∈", "∋"),
+    ("∉", "∌"),
+    ("∊", "∍"),
+    ("∕", "⧵"),
+    ("∟", "⯾"),
+    ("∠", "⦣"),
+    ("∡", "⦛"),
+    ("∢", "⦠"),
+    ("∤", "⫮"),
+    ("∼", "∽"),
+    ("≃", "⋍"),
+    ("≅", "≌"),
+    ("≒", "≓"),
+    ("≔", "≕"),
+    ("≤", "≥"),
+    ("≦", "≧"),
+    ("≨", "≩"),
+    ("≪", "≫"),
+    ("≮", "≯"),
+    ("≰", "≱"),
+    ("≲", "≳"),
+    ("≴", "≵"),
+    ("≶", "≷"),
+    ("≸", "≹"),
+    ("≺", "≻"),
+    ("≼", "≽"),
+    ("≾", "≿"),
+    ("⊀", "⊁"),
+    ("⊂", "⊃"),
+    ("⊄", "⊅"),
+    ("⊆", "⊇"),
+    ("⊈", "⊉"),
+    ("⊊", "⊋"),
+    ("⊏", "⊐"),
+    ("⊑", "⊒"),
+    ("⊘", "⦸"),
+    ("⊢", "⊣"),
+    ("⊦", "⫞"),
+    ("⊨", "⫤"),
+    ("⊩", "⫣"),
+    ("⊫", "⫥"),
+    ("⊰", "⊱"),
+    ("⊲", "⊳"),
+    ("⊴", "⊵"),
+    ("⊶", "⊷"),
+    ("⊸", "⟜"),
+    ("⋉", "⋊"),
+    ("⋋", "⋌"),
+    ("⋐", "⋑"),
+    ("⋖", "⋗"),
+    ("⋘", "⋙"),
+    ("⋚", "⋛"),
+    ("⋜", "⋝"),
+    ("⋞", "⋟"),
+    ("⋠", "⋡"),
+    ("⋢", "⋣"),
+    ("⋤", "⋥"),
+    ("⋦", "⋧"),
+    ("⋨", "⋩"),
+    ("⋪", "⋫"),
+    ("⋬", "⋭"),
+    ("⋰", "⋱"),
+    ("⋲", "⋺"),
+    ("⋳", "⋻"),
+    ("⋴", "⋼"),
+    ("⋶", "⋽"),
+    ("⋷", "⋾"),
+    ("⌈", "⌉"),
+    ("⌊", "⌋"),
+    ("〈", "〉"),
+    ("❨", "❩"),
+    ("❪", "❫"),
+    ("❬", "❭"),
+    ("❮", "❯"),
+    ("❰", "❱"),
+    ("❲", "❳"),
+    ("❴", "❵"),
+    ("⟃", "⟄"),
+    ("⟅", "⟆"),
+    ("⟈", "⟉"),
+    ("⟋", "⟍"),
+    ("⟕", "⟖"),
+    ("⟝", "⟞"),
+    ("⟢", "⟣"),
+    ("⟤", "⟥"),
+    ("⟦", "⟧"),
+    ("⟨", "⟩"),
+    ("⟪", "⟫"),
+    ("⟬", "⟭"),
+    ("⟮", "⟯"),
+    ("⦃", "⦄"),
+    ("⦅", "⦆"),
+    ("⦇", "⦈"),
+    ("⦉", "⦊"),
+    ("⦋", "⦌"),
+    ("⦍", "⦐"),
+    ("⦎", "⦏"),
+    ("⦏", "⦎"),
+    ("⦑", "⦒"),
+    ("⦓", "⦔"),
+    ("⦕", "⦖"),
+    ("⦗", "⦘"),
+    ("⦤", "⦥"),
+    ("⦨", "⦩"),
+    ("⦪", "⦫"),
+    ("⦬", "⦭"),
+    ("⦮", "⦯"),
+    ("⧀", "⧁"),
+    ("⧄", "⧅"),
+    ("⧏", "⧐"),
+    ("⧑", "⧒"),
+    ("⧔", "⧕"),
+    ("⧘", "⧙"),
+    ("⧚", "⧛"),
+    ("⧨", "⧩"),
+    ("⧸", "⧹"),
+    ("⧼", "⧽"),
+    ("⨫", "⨬"),
+    ("⨭", "⨮"),
+    ("⨴", "⨵"),
+    ("⨼", "⨽"),
+    ("⩤", "⩥"),
+    ("⩹", "⩺"),
+    ("⩻", "⩼"),
+    ("⩽", "⩾"),
+    ("⩿", "⪀"),
+    ("⪁", "⪂"),
+    ("⪃", "⪄"),
+    ("⪅", "⪆"),
+    ("⪇", "⪈"),
+    ("⪉", "⪊"),
+    ("⪋", "⪌"),
+    ("⪍", "⪎"),
+    ("⪏", "⪐"),
+    ("⪑", "⪒"),
+    ("⪓", "⪔"),
+    ("⪕", "⪖"),
+    ("⪗", "⪘"),
+    ("⪙", "⪚"),
+    ("⪛", "⪜"),
+    ("⪝", "⪞"),
+    ("⪟", "⪠"),
+    ("⪡", "⪢"),
+    ("⪦", "⪧"),
+    ("⪨", "⪩"),
+    ("⪪", "⪫"),
+    ("⪬", "⪭"),
+    ("⪯", "⪰"),
+    ("⪱", "⪲"),
+    ("⪳", "⪴"),
+    ("⪵", "⪶"),
+    ("⪷", "⪸"),
+    ("⪹", "⪺"),
+    ("⪻", "⪼"),
+    ("⪽", "⪾"),
+    ("⪿", "⫀"),
+    ("⫁", "⫂"),
+    ("⫃", "⫄"),
+    ("⫅", "⫆"),
+    ("⫇", "⫈"),
+    ("⫉", "⫊"),
+    ("⫋", "⫌"),
+    ("⫍", "⫎"),
+    ("⫏", "⫐"),
+    ("⫑", "⫒"),
+    ("⫓", "⫔"),
+    ("⫕", "⫖"),
+    ("⫬", "⫭"),
+    ("⫷", "⫸"),
+    ("⫹", "⫺"),
+    ("⸂", "⸃"),
+    ("⸄", "⸅"),
+    ("⸉", "⸊"),
+    ("⸌", "⸍"),
+    ("⸜", "⸝"),
+    ("⸠", "⸡"),
+    ("⸢", "⸣"),
+    ("⸤", "⸥"),
+    ("⸦", "⸧"),
+    ("⸨", "⸩"),
+    ("⹕", "⹖"),
+    ("⹗", "⹘"),
+    ("⹙", "⹚"),
+    ("⹛", "⹜"),
+    ("〈", "〉"),
+    ("《", "》"),
+    ("「", "」"),
+    ("『", "』"),
+    ("【", "】"),
+    ("〔", "〕"),
+    ("〖", "〗"),
+    ("〘", "〙"),
+    ("〚", "〛"),
+    ("﹙", "﹚"),
+    ("﹛", "﹜"),
+    ("﹝", "﹞"),
+    ("﹤", "﹥"),
+    ("（", "）"),
+    ("＜", "＞"),
+    ("［", "］"),
+    ("｛", "｝"),
+    ("｟", "｠"),
+    ("｢", "｣"),
+];
+
+/**
+Generate a [`BTreeMap`] with the matching close bracket for each open bracket in
+`BidiMirroring.txt` and `BidiBrackets.txt`
+*/
+pub fn close_brackets_mirroring() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS_MIRRORING.iter().cloned().collect()
+}
+
+/**
+Generate a [`BTreeMap`] with the matching open bracket for each close bracket in
+`BidiMirroring.txt` and `BidiBrackets.txt`
+*/
+pub fn open_brackets_mirroring() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS_MIRRORING
+        .iter()
+        .cloned()
+        .map(|(open, close)| (close, open))
+        .collect()
+}
+
+/**
+Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
+`BidiMirroring.txt` and `BidiBrackets.txt`
+*/
+pub fn matching_brackets_mirroring() -> BTreeMap<&'static str, &'static str> {
+    BRACKETS_MIRRORING
+        .iter()
+        .cloned()
+        .flat_map(|(open, close)| [(open, close), (close, open)])
+        .collect()
+}
+
+/// Matching open/close brackets from `UnicodeData.txt` and `BidiMirroring.txt`
+pub const MIRRORING_MATCHING: &[(&str, &str)] = &[
+    ("(", ")"),
+    ("<", ">"),
+    ("[", "]"),
+    ("{", "}"),
+    ("«", "»"),
+    ("༺", "༻"),
+    ("༼", "༽"),
+    ("᚛", "᚜"),
+    ("‘", "’"),
+    ("“", "”"),
+    ("‹", "›"),
+    ("⁅", "⁆"),
+    ("⁽", "⁾"),
+    ("₍", "₎"),
+    ("∈", "∋"),
+    ("∉", "∌"),
+    ("∊", "∍"),
+    ("∕", "⧵"),
+    ("∟", "⯾"),
+    ("∠", "⦣"),
+    ("∡", "⦛"),
+    ("∢", "⦠"),
+    ("∤", "⫮"),
+    ("∼", "∽"),
+    ("≃", "⋍"),
+    ("≅", "≌"),
+    ("≒", "≓"),
+    ("≔", "≕"),
+    ("≤", "≥"),
+    ("≦", "≧"),
+    ("≨", "≩"),
+    ("≪", "≫"),
+    ("≮", "≯"),
+    ("≰", "≱"),
+    ("≲", "≳"),
+    ("≴", "≵"),
+    ("≶", "≷"),
+    ("≸", "≹"),
+    ("≺", "≻"),
+    ("≼", "≽"),
+    ("≾", "≿"),
+    ("⊀", "⊁"),
+    ("⊂", "⊃"),
+    ("⊄", "⊅"),
+    ("⊆", "⊇"),
+    ("⊈", "⊉"),
+    ("⊊", "⊋"),
+    ("⊏", "⊐"),
+    ("⊑", "⊒"),
+    ("⊘", "⦸"),
+    ("⊢", "⊣"),
+    ("⊦", "⫞"),
+    ("⊨", "⫤"),
+    ("⊩", "⫣"),
+    ("⊫", "⫥"),
+    ("⊰", "⊱"),
+    ("⊲", "⊳"),
+    ("⊴", "⊵"),
+    ("⊶", "⊷"),
+    ("⊸", "⟜"),
+    ("⋉", "⋊"),
+    ("⋋", "⋌"),
+    ("⋐", "⋑"),
+    ("⋖", "⋗"),
+    ("⋘", "⋙"),
+    ("⋚", "⋛"),
+    ("⋜", "⋝"),
+    ("⋞", "⋟"),
+    ("⋠", "⋡"),
+    ("⋢", "⋣"),
+    ("⋤", "⋥"),
+    ("⋦", "⋧"),
+    ("⋨", "⋩"),
+    ("⋪", "⋫"),
+    ("⋬", "⋭"),
+    ("⋰", "⋱"),
+    ("⋲", "⋺"),
+    ("⋳", "⋻"),
+    ("⋴", "⋼"),
+    ("⋶", "⋽"),
+    ("⋷", "⋾"),
+    ("⌈", "⌉"),
+    ("⌊", "⌋"),
+    ("〈", "〉"),
+    ("❨", "❩"),
+    ("❪", "❫"),
+    ("❬", "❭"),
+    ("❮", "❯"),
+    ("❰", "❱"),
+    ("❲", "❳"),
+    ("❴", "❵"),
+    ("⟃", "⟄"),
+    ("⟅", "⟆"),
+    ("⟈", "⟉"),
+    ("⟋", "⟍"),
+    ("⟕", "⟖"),
+    ("⟝", "⟞"),
+    ("⟢", "⟣"),
+    ("⟤", "⟥"),
+    ("⟦", "⟧"),
+    ("⟨", "⟩"),
+    ("⟪", "⟫"),
+    ("⟬", "⟭"),
+    ("⟮", "⟯"),
+    ("⦃", "⦄"),
+    ("⦅", "⦆"),
+    ("⦇", "⦈"),
+    ("⦉", "⦊"),
+    ("⦋", "⦌"),
+    ("⦍", "⦎"),
+    ("⦎", "⦏"),
+    ("⦏", "⦐"),
+    ("⦑", "⦒"),
+    ("⦓", "⦔"),
+    ("⦕", "⦖"),
+    ("⦗", "⦘"),
+    ("⦤", "⦥"),
+    ("⦨", "⦩"),
+    ("⦪", "⦫"),
+    ("⦬", "⦭"),
+    ("⦮", "⦯"),
+    ("⧀", "⧁"),
+    ("⧄", "⧅"),
+    ("⧏", "⧐"),
+    ("⧑", "⧒"),
+    ("⧔", "⧕"),
+    ("⧘", "⧙"),
+    ("⧚", "⧛"),
+    ("⧨", "⧩"),
+    ("⧸", "⧹"),
+    ("⧼", "⧽"),
+    ("⨫", "⨬"),
+    ("⨭", "⨮"),
+    ("⨴", "⨵"),
+    ("⨼", "⨽"),
+    ("⩤", "⩥"),
+    ("⩹", "⩺"),
+    ("⩻", "⩼"),
+    ("⩽", "⩾"),
+    ("⩿", "⪀"),
+    ("⪁", "⪂"),
+    ("⪃", "⪄"),
+    ("⪅", "⪆"),
+    ("⪇", "⪈"),
+    ("⪉", "⪊"),
+    ("⪋", "⪌"),
+    ("⪍", "⪎"),
+    ("⪏", "⪐"),
+    ("⪑", "⪒"),
+    ("⪓", "⪔"),
+    ("⪕", "⪖"),
+    ("⪗", "⪘"),
+    ("⪙", "⪚"),
+    ("⪛", "⪜"),
+    ("⪝", "⪞"),
+    ("⪟", "⪠"),
+    ("⪡", "⪢"),
+    ("⪦", "⪧"),
+    ("⪨", "⪩"),
+    ("⪪", "⪫"),
+    ("⪬", "⪭"),
+    ("⪯", "⪰"),
+    ("⪱", "⪲"),
+    ("⪳", "⪴"),
+    ("⪵", "⪶"),
+    ("⪷", "⪸"),
+    ("⪹", "⪺"),
+    ("⪻", "⪼"),
+    ("⪽", "⪾"),
+    ("⪿", "⫀"),
+    ("⫁", "⫂"),
+    ("⫃", "⫄"),
+    ("⫅", "⫆"),
+    ("⫇", "⫈"),
+    ("⫉", "⫊"),
+    ("⫋", "⫌"),
+    ("⫍", "⫎"),
+    ("⫏", "⫐"),
+    ("⫑", "⫒"),
+    ("⫓", "⫔"),
+    ("⫕", "⫖"),
+    ("⫬", "⫭"),
+    ("⫷", "⫸"),
+    ("⫹", "⫺"),
+    ("⸂", "⸃"),
+    ("⸄", "⸅"),
+    ("⸉", "⸊"),
+    ("⸌", "⸍"),
+    ("⸜", "⸝"),
+    ("⸠", "⸡"),
+    ("⸢", "⸣"),
+    ("⸤", "⸥"),
+    ("⸦", "⸧"),
+    ("⸨", "⸩"),
+    ("⹕", "⹖"),
+    ("⹗", "⹘"),
+    ("⹙", "⹚"),
+    ("⹛", "⹜"),
+    ("〈", "〉"),
+    ("《", "》"),
+    ("「", "」"),
+    ("『", "』"),
+    ("【", "】"),
+    ("〔", "〕"),
+    ("〖", "〗"),
+    ("〘", "〙"),
+    ("〚", "〛"),
+    ("﴾", "﴿"),
+    ("︗", "︘"),
+    ("︵", "︶"),
+    ("︷", "︸"),
+    ("︹", "︺"),
+    ("︻", "︼"),
+    ("︽", "︾"),
+    ("︿", "﹀"),
+    ("﹁", "﹂"),
+    ("﹃", "﹄"),
+    ("﹇", "﹈"),
+    ("﹙", "﹚"),
+    ("﹛", "﹜"),
+    ("﹝", "﹞"),
+    ("﹤", "﹥"),
+    ("（", "）"),
+    ("＜", "＞"),
+    ("［", "］"),
+    ("｛", "｝"),
+    ("｟", "｠"),
+    ("｢", "｣"),
+];
+
+/**
+Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`
+and `BidiMirroring.txt`
+*/
+pub fn close_mirroring_matching() -> BTreeMap<&'static str, &'static str> {
+    MIRRORING_MATCHING.iter().cloned().collect()
+}
+
+/**
+Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`
+and `BidiMirroring.txt`
+*/
+pub fn open_mirroring_matching() -> BTreeMap<&'static str, &'static str> {
+    MIRRORING_MATCHING
+        .iter()
+        .cloned()
+        .map(|(open, close)| (close, open))
+        .collect()
+}
+
+/**
+Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
+`UnicodeData.txt` and `BidiMirroring.txt`
+*/
+pub fn matching_mirroring_matching() -> BTreeMap<&'static str, &'static str> {
+    MIRRORING_MATCHING
+        .iter()
+        .cloned()
+        .flat_map(|(open, close)| [(open, close), (close, open)])
+        .collect()
+}
+
+/// Matching open/close brackets from `UnicodeData.txt`, `BidiBrackets.txt`, and `BidiMirroring.txt`
+pub const ALL: &[(&str, &str)] = &[
+    ("(", ")"),
+    ("<", ">"),
+    ("[", "]"),
+    ("{", "}"),
+    ("«", "»"),
+    ("༺", "༻"),
+    ("༼", "༽"),
+    ("᚛", "᚜"),
+    ("‘", "’"),
+    ("“", "”"),
+    ("‹", "›"),
+    ("⁅", "⁆"),
+    ("⁽", "⁾"),
+    ("₍", "₎"),
+    ("∈", "∋"),
+    ("∉", "∌"),
+    ("∊", "∍"),
+    ("∕", "⧵"),
+    ("∟", "⯾"),
+    ("∠", "⦣"),
+    ("∡", "⦛"),
+    ("∢", "⦠"),
+    ("∤", "⫮"),
+    ("∼", "∽"),
+    ("≃", "⋍"),
+    ("≅", "≌"),
+    ("≒", "≓"),
+    ("≔", "≕"),
+    ("≤", "≥"),
+    ("≦", "≧"),
+    ("≨", "≩"),
+    ("≪", "≫"),
+    ("≮", "≯"),
+    ("≰", "≱"),
+    ("≲", "≳"),
+    ("≴", "≵"),
+    ("≶", "≷"),
+    ("≸", "≹"),
+    ("≺", "≻"),
+    ("≼", "≽"),
+    ("≾", "≿"),
+    ("⊀", "⊁"),
+    ("⊂", "⊃"),
+    ("⊄", "⊅"),
+    ("⊆", "⊇"),
+    ("⊈", "⊉"),
+    ("⊊", "⊋"),
+    ("⊏", "⊐"),
+    ("⊑", "⊒"),
+    ("⊘", "⦸"),
+    ("⊢", "⊣"),
+    ("⊦", "⫞"),
+    ("⊨", "⫤"),
+    ("⊩", "⫣"),
+    ("⊫", "⫥"),
+    ("⊰", "⊱"),
+    ("⊲", "⊳"),
+    ("⊴", "⊵"),
+    ("⊶", "⊷"),
+    ("⊸", "⟜"),
+    ("⋉", "⋊"),
+    ("⋋", "⋌"),
+    ("⋐", "⋑"),
+    ("⋖", "⋗"),
+    ("⋘", "⋙"),
+    ("⋚", "⋛"),
+    ("⋜", "⋝"),
+    ("⋞", "⋟"),
+    ("⋠", "⋡"),
+    ("⋢", "⋣"),
+    ("⋤", "⋥"),
+    ("⋦", "⋧"),
+    ("⋨", "⋩"),
+    ("⋪", "⋫"),
+    ("⋬", "⋭"),
+    ("⋰", "⋱"),
+    ("⋲", "⋺"),
+    ("⋳", "⋻"),
+    ("⋴", "⋼"),
+    ("⋶", "⋽"),
+    ("⋷", "⋾"),
+    ("⌈", "⌉"),
+    ("⌊", "⌋"),
+    ("〈", "〉"),
+    ("❨", "❩"),
+    ("❪", "❫"),
+    ("❬", "❭"),
+    ("❮", "❯"),
+    ("❰", "❱"),
+    ("❲", "❳"),
+    ("❴", "❵"),
+    ("⟃", "⟄"),
+    ("⟅", "⟆"),
+    ("⟈", "⟉"),
+    ("⟋", "⟍"),
+    ("⟕", "⟖"),
+    ("⟝", "⟞"),
+    ("⟢", "⟣"),
+    ("⟤", "⟥"),
+    ("⟦", "⟧"),
+    ("⟨", "⟩"),
+    ("⟪", "⟫"),
+    ("⟬", "⟭"),
+    ("⟮", "⟯"),
+    ("⦃", "⦄"),
+    ("⦅", "⦆"),
+    ("⦇", "⦈"),
+    ("⦉", "⦊"),
+    ("⦋", "⦌"),
+    ("⦍", "⦎"),
+    ("⦎", "⦏"),
+    ("⦏", "⦐"),
+    ("⦑", "⦒"),
+    ("⦓", "⦔"),
+    ("⦕", "⦖"),
+    ("⦗", "⦘"),
+    ("⦤", "⦥"),
+    ("⦨", "⦩"),
+    ("⦪", "⦫"),
+    ("⦬", "⦭"),
+    ("⦮", "⦯"),
+    ("⧀", "⧁"),
+    ("⧄", "⧅"),
+    ("⧏", "⧐"),
+    ("⧑", "⧒"),
+    ("⧔", "⧕"),
+    ("⧘", "⧙"),
+    ("⧚", "⧛"),
+    ("⧨", "⧩"),
+    ("⧸", "⧹"),
+    ("⧼", "⧽"),
+    ("⨫", "⨬"),
+    ("⨭", "⨮"),
+    ("⨴", "⨵"),
+    ("⨼", "⨽"),
+    ("⩤", "⩥"),
+    ("⩹", "⩺"),
+    ("⩻", "⩼"),
+    ("⩽", "⩾"),
+    ("⩿", "⪀"),
+    ("⪁", "⪂"),
+    ("⪃", "⪄"),
+    ("⪅", "⪆"),
+    ("⪇", "⪈"),
+    ("⪉", "⪊"),
+    ("⪋", "⪌"),
+    ("⪍", "⪎"),
+    ("⪏", "⪐"),
+    ("⪑", "⪒"),
+    ("⪓", "⪔"),
+    ("⪕", "⪖"),
+    ("⪗", "⪘"),
+    ("⪙", "⪚"),
+    ("⪛", "⪜"),
+    ("⪝", "⪞"),
+    ("⪟", "⪠"),
+    ("⪡", "⪢"),
+    ("⪦", "⪧"),
+    ("⪨", "⪩"),
+    ("⪪", "⪫"),
+    ("⪬", "⪭"),
+    ("⪯", "⪰"),
+    ("⪱", "⪲"),
+    ("⪳", "⪴"),
+    ("⪵", "⪶"),
+    ("⪷", "⪸"),
+    ("⪹", "⪺"),
+    ("⪻", "⪼"),
+    ("⪽", "⪾"),
+    ("⪿", "⫀"),
+    ("⫁", "⫂"),
+    ("⫃", "⫄"),
+    ("⫅", "⫆"),
+    ("⫇", "⫈"),
+    ("⫉", "⫊"),
+    ("⫋", "⫌"),
+    ("⫍", "⫎"),
+    ("⫏", "⫐"),
+    ("⫑", "⫒"),
+    ("⫓", "⫔"),
+    ("⫕", "⫖"),
+    ("⫬", "⫭"),
+    ("⫷", "⫸"),
+    ("⫹", "⫺"),
+    ("⸂", "⸃"),
+    ("⸄", "⸅"),
+    ("⸉", "⸊"),
+    ("⸌", "⸍"),
+    ("⸜", "⸝"),
+    ("⸠", "⸡"),
+    ("⸢", "⸣"),
+    ("⸤", "⸥"),
+    ("⸦", "⸧"),
+    ("⸨", "⸩"),
+    ("⹕", "⹖"),
+    ("⹗", "⹘"),
+    ("⹙", "⹚"),
+    ("⹛", "⹜"),
+    ("〈", "〉"),
+    ("《", "》"),
+    ("「", "」"),
+    ("『", "』"),
+    ("【", "】"),
+    ("〔", "〕"),
+    ("〖", "〗"),
+    ("〘", "〙"),
+    ("〚", "〛"),
+    ("﴾", "﴿"),
+    ("︗", "︘"),
+    ("︵", "︶"),
+    ("︷", "︸"),
+    ("︹", "︺"),
+    ("︻", "︼"),
+    ("︽", "︾"),
+    ("︿", "﹀"),
+    ("﹁", "﹂"),
+    ("﹃", "﹄"),
+    ("﹇", "﹈"),
+    ("﹙", "﹚"),
+    ("﹛", "﹜"),
+    ("﹝", "﹞"),
+    ("﹤", "﹥"),
+    ("（", "）"),
+    ("＜", "＞"),
+    ("［", "］"),
+    ("｛", "｝"),
+    ("｟", "｠"),
+    ("｢", "｣"),
+];
+
+/**
+Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`,
+`BidiBrackets.txt`, and `BidiMirroring.txt`
+*/
+pub fn close_all() -> BTreeMap<&'static str, &'static str> {
+    ALL.iter().cloned().collect()
+}
+
+/**
+Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`,
+`BidiBrackets.txt`, and `BidiMirroring.txt`
+*/
+pub fn open_all() -> BTreeMap<&'static str, &'static str> {
+    ALL
+        .iter()
+        .cloned()
+        .map(|(open, close)| (close, open))
+        .collect()
+}
+
+/**
+Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
+`UnicodeData.txt`, `BidiBrackets.txt`, and `BidiMirroring.txt`
+*/
+pub fn matching_all() -> BTreeMap<&'static str, &'static str> {
+    ALL
         .iter()
         .cloned()
         .flat_map(|(open, close)| [(open, close), (close, open)])
@@ -115,7 +1370,7 @@ pub fn matching() -> BTreeMap<&'static str, &'static str> {
 pub trait FindMatching {
     /**
     Find the index of the matching open or close grapheme for the grapheme at `position`, given the
-    matching `closing` and `opening` brackets/quotes
+    matching `closing` and `opening` brackets
 
     If the grapheme at `position` is not an opening or closing grapheme, `position` is greater or
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.
@@ -132,7 +1387,7 @@ pub trait FindMatching {
 impl FindMatching for str {
     /**
     Find the index of the matching open or close grapheme for the grapheme at `position`, given the
-    matching `closing` and `opening` brackets/quotes
+    matching `closing` and `opening` brackets
 
     If the grapheme at `position` is not an opening or closing grapheme, `position` is greater or
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.
@@ -150,7 +1405,7 @@ impl FindMatching for str {
 impl FindMatching for GString {
     /**
     Find the index of the matching open or close grapheme for the grapheme at `position`, given the
-    matching `closing` and `opening` brackets/quotes
+    matching `closing` and `opening` brackets
 
     If the grapheme at `position` is not an opening or closing grapheme, `position` is greater or
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.

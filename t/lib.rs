@@ -2,37 +2,12 @@ use gstring::*;
 
 use std::collections::BTreeMap;
 
-/// Full set of matching brackets/quotes
-!run:../bin/matching.sh
-
-/// Generate a [`BTreeMap`] with the matching close bracket/quote for each open bracket/quote
-pub fn close() -> BTreeMap<&'static str, &'static str> {
-    MATCHING.iter().cloned().collect()
-}
-
-/// Generate a [`BTreeMap`] with the matching open bracket/quote for each close bracket/quote
-pub fn open() -> BTreeMap<&'static str, &'static str> {
-    MATCHING
-        .iter()
-        .cloned()
-        .map(|(open, close)| (close, open))
-        .collect()
-}
-
-/// Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets/quotes
-pub fn matching() -> BTreeMap<&'static str, &'static str> {
-    MATCHING
-        .iter()
-        .cloned()
-        .flat_map(|(open, close)| [(open, close), (close, open)])
-        .collect()
-}
-
+!run:../bin/matching.pl
 /// Trait to provide the [`FindMatching::find_matching`] method
 pub trait FindMatching {
     /**
     Find the index of the matching open or close grapheme for the grapheme at `position`, given the
-    matching `closing` and `opening` brackets/quotes
+    matching `closing` and `opening` brackets
 
     If the grapheme at `position` is not an opening or closing grapheme, `position` is greater or
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.
@@ -49,7 +24,7 @@ pub trait FindMatching {
 impl FindMatching for str {
     /**
     Find the index of the matching open or close grapheme for the grapheme at `position`, given the
-    matching `closing` and `opening` brackets/quotes
+    matching `closing` and `opening` brackets
 
     If the grapheme at `position` is not an opening or closing grapheme, `position` is greater or
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.
@@ -67,7 +42,7 @@ impl FindMatching for str {
 impl FindMatching for GString {
     /**
     Find the index of the matching open or close grapheme for the grapheme at `position`, given the
-    matching `closing` and `opening` brackets/quotes
+    matching `closing` and `opening` brackets
 
     If the grapheme at `position` is not an opening or closing grapheme, `position` is greater or
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.
