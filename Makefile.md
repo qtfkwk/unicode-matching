@@ -74,6 +74,7 @@ cargo build --release
 
 ```
 kapow {0} >{target}
+rustfmt {target}
 ```
 
 # `README.md`

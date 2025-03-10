@@ -9,4 +9,5 @@
     * 0.5.1 (2025-03-10): Update readme and include as crate doc
     * 0.5.2 (2025-03-10): Fix description; add doctest example; improve doc
     * 0.5.3 (2025-03-10): Improve the doctest example
+    * 0.5.4 (2025-03-10): Fix the doctest example; use `rustfmt` on generated `src/lib.rs`
 

@@ -44,7 +44,7 @@ assert_eq!(s.find_matching(0, &close, &open), 0);
 assert_eq!(s.find_matching(length, &close, &open), length);
 assert_eq!(s.find_matching(more, &close, &open), more);
 
-// Also note that regular/straight single or double quotes do not match because they aren't valid
+// Note that regular/straight single or double quotes do not match because they aren't valid
 // matching graphemes according to Unicode
 assert_eq!(s.find_matching(25, &close, &open), 25);
 assert_eq!(s.find_matching(32, &close, &open), 32);
