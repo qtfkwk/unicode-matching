@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use gstring::*;
 
 use std::collections::BTreeMap;
@@ -1347,8 +1349,7 @@ Generate a [`BTreeMap`] with the matching open bracket for each close bracket in
 `BidiBrackets.txt`, and `BidiMirroring.txt`
 */
 pub fn open_all() -> BTreeMap<&'static str, &'static str> {
-    ALL
-        .iter()
+    ALL.iter()
         .cloned()
         .map(|(open, close)| (close, open))
         .collect()
@@ -1359,8 +1360,7 @@ Generate a [`BTreeMap`] with an entry for each pair of opening and closing brack
 `UnicodeData.txt`, `BidiBrackets.txt`, and `BidiMirroring.txt`
 */
 pub fn matching_all() -> BTreeMap<&'static str, &'static str> {
-    ALL
-        .iter()
+    ALL.iter()
         .cloned()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
@@ -1393,7 +1393,8 @@ impl FindMatching for str {
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.
     matching graphemes are unbalanced), the given `position` is returned.
     */
-    fn find_matching(&self,
+    fn find_matching(
+        &self,
         position: usize,
         closing: &BTreeMap<&str, &str>,
         opening: &BTreeMap<&str, &str>,
@@ -1411,7 +1412,8 @@ impl FindMatching for GString {
     equal to the length of `self`, or the algorithm fails to find the matching grapheme (e.g.
     matching graphemes are unbalanced), the given `position` is returned.
     */
-    fn find_matching(&self,
+    fn find_matching(
+        &self,
         position: usize,
         closing: &BTreeMap<&str, &str>,
         opening: &BTreeMap<&str, &str>,
