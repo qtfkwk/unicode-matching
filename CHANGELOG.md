@@ -8,4 +8,5 @@
 * 0.5.0 (2025-03-10): Add `{ALL,BRACKETS{,_MATCHING,_MIRRORING},MIRRORING{,_MATCHING}` constants and corresponding `{close,open,matching}_{all,brackets{,_matching,_mirroring},mirroring{,_matching}` functions with additional graphemes from the `BidiBrackets.txt` and `BidiMirroring.txt` files ([mentioned here](https://stackoverflow.com/questions/13535172/list-of-all-unicodes-open-close-brackets/13535289#comment53701946_13535289)); port `matching.sh` from Bash to Perl: `matching.pl`
     * 0.5.1 (2025-03-10): Update readme and include as crate doc
     * 0.5.2 (2025-03-10): Fix description; add doctest example; improve doc
+    * 0.5.3 (2025-03-10): Improve the doctest example
 

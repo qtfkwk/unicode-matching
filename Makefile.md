@@ -38,6 +38,8 @@ cargo clippy -- -D clippy::all
 * `Cargo.lock`
 * `Cargo.toml`
 * `**/*.rs`
+* `README.md`
+* `src/lib.rs`
 
 ```
 cargo test

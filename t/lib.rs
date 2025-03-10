@@ -1,3 +1,5 @@
+!run:echo "#![doc = include_str!(\"../README.md\")]"
+
 use gstring::*;
 
 use std::collections::BTreeMap;

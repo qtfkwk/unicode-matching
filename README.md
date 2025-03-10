@@ -13,8 +13,10 @@ Original idea is from [this StackOverflow thread](https://stackoverflow.com/a/13
 # Example
 
 ```rust
+// Use the `FindMatching` trait
 use unicode_matching::FindMatching;
 
+// Generate the close/open `BTreeMap`s
 let close = unicode_matching::close();
 let open = unicode_matching::open();
 
@@ -22,19 +24,36 @@ let s = "fn main() {\n    println!(\"Hello!\");\n}";
 //       000000000011 11111111222222 2222333 333 33
 //       012345678901 23456789012345 6789012 345 67
 
+// Match the open/close parentheses in `main()`
 assert_eq!(s.find_matching(7, &close, &open), 8);
 assert_eq!(s.find_matching(8, &close, &open), 7);
 
+// Match the open/close curly braces in `main() {...}`
 assert_eq!(s.find_matching(10, &close, &open), 36);
 assert_eq!(s.find_matching(36, &close, &open), 10);
 
+// Match the open/close parentheses in `println!("...")`
 assert_eq!(s.find_matching(24, &close, &open), 33);
 assert_eq!(s.find_matching(33, &close, &open), 24);
 
 let length = s.len();
 let more = length + 1;
+
+// Any other index (whether valid or invalid) returns itself
 assert_eq!(s.find_matching(0, &close, &open), 0);
 assert_eq!(s.find_matching(length, &close, &open), length);
 assert_eq!(s.find_matching(more, &close, &open), more);
+
+// Also note that regular/straight single or double quotes do not match because they aren't valid
+// matching graphemes according to Unicode
+assert_eq!(s.find_matching(25, &close, &open), 25);
+assert_eq!(s.find_matching(32, &close, &open), 32);
+
+// ... but they can be added manually and then it works
+use std::collections::BTreeMap;
+let close = unicode_matching::close().into_iter().chain([("'", "'"), ("\"", "\"")]).collect::<BTreeMap<_, _>>();
+let open = unicode_matching::open().into_iter().chain([("'", "'"), ("\"", "\"")]).collect::<BTreeMap<_, _>>();
+assert_eq!(s.find_matching(25, &close, &open), 32);
+assert_eq!(s.find_matching(32, &close, &open), 25);
 ```
 
