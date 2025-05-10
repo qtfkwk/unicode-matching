@@ -11,4 +11,5 @@
     * 0.5.3 (2025-03-10): Improve the doctest example
     * 0.5.4 (2025-03-10): Fix the doctest example; use `rustfmt` on generated `src/lib.rs`
     * 0.5.5 (2025-04-16): Update dependencies
+    * 0.5.6 (2025-05-10): Separate `last-modified.txt` target in makefile; update dependencies
 

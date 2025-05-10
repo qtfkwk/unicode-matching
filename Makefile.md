@@ -62,10 +62,16 @@ cargo bench -q 2>&1 |tee benches/report.txt
 * `Cargo.toml`
 * `**/*.rs`
 * `README.md`
+* `last-modified.txt`
 
 ```
 cargo build --release
-./bin/last-modified.sh >last-modified.txt
+```
+
+# `last-modified.txt`
+
+```
+./bin/last-modified.sh >{target}
 ```
 
 # `src/lib.rs`
