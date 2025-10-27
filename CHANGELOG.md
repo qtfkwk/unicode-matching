@@ -13,4 +13,5 @@
     * 0.5.5 (2025-04-16): Update dependencies
     * 0.5.6 (2025-05-10): Separate `last-modified.txt` target in makefile; update dependencies
 * 0.6.0 (2025-09-02): Update dependencies; 2024 edition
+    * 0.6.1 (2025-10-27): Update dependencies
 
