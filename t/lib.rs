@@ -68,7 +68,7 @@ impl FindMatching for GString {
             return position;
         }
 
-        let mut stack: Vec<(usize, &String)> = vec![];
+        let mut stack: Vec<(usize, &Grapheme)> = vec![];
         for (i, g) in v.iter().enumerate() {
             if let Some(open) = opening.get(&g.as_str()) {
                 // g is a close

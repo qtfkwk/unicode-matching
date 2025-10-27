@@ -86,7 +86,7 @@ checksum = "462eeb75aeb73aea900253ce739c8e18a67423fadf006037cd3ff27e82748a06"
 
 [[package]]
 name = "unicode-matching"
-version = "0.6.1"
+version = "0.6.2"
 dependencies = [
  "gstring",
 ]

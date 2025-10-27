@@ -1,6 +1,6 @@
 [package]
 name = "unicode-matching"
-version = "0.6.1"
+version = "0.6.2"
 edition = "2024"
 description = "Rust library crate to match Unicode open/close brackets"
 license = "MIT"
