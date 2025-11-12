@@ -15,4 +15,5 @@
 * 0.6.0 (2025-09-02): Update dependencies; 2024 edition
     * 0.6.1 (2025-10-27): Update dependencies
     * 0.6.2 (2025-10-27): Fix regressions in `t/lib.rs` and `bin/last-modified.sh`
+    * 0.6.3 (2025-11-12): Update dependencies
 
