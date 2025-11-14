@@ -131,7 +131,9 @@ for (
     my $matching_doc = wrap_comment("Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in $files");
 
     # Print the constant
-    print "$const_doc\npub const $const: &[(&str, &str)] = &[\n";
+    print "$const_doc
+#[allow(clippy::unicode_not_nfc)]
+pub const $const: &[(&str, &str)] = &[\n";
     foreach my $key (sort keys %$data) {
         print "    (\"$key\", \"$data->{$key}\"),\n";
     }
@@ -139,26 +141,29 @@ for (
 
     # Print the close function
     print "$close_doc
+#[must_use]
 pub fn close$name() -> BTreeMap<&'static str, &'static str> {
-    $const.iter().cloned().collect()
+    $const.iter().copied().collect()
 }\n\n";
 
     # Print the open function
     print "$open_doc
+#[must_use]
 pub fn open$name() -> BTreeMap<&'static str, &'static str> {
     $const
         .iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }\n\n";
 
     # Print the matching function
     print "$matching_doc
+#[must_use]
 pub fn matching$name() -> BTreeMap<&'static str, &'static str> {
     $const
         .iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }\n\n";
