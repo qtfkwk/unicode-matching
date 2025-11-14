@@ -16,4 +16,5 @@
     * 0.6.1 (2025-10-27): Update dependencies
     * 0.6.2 (2025-10-27): Fix regressions in `t/lib.rs` and `bin/last-modified.sh`
     * 0.6.3 (2025-11-12): Update dependencies
+    * 0.6.4 (2025-11-14): Update dependencies; add `clippy::pedantic` to `cargo clippy` command in the `clippy` target in the makefile; clippy fixes
 

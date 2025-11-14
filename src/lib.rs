@@ -1,10 +1,11 @@
 #![doc = include_str!("../README.md")]
 
-use gstring::*;
+use gstring::{GString, GStringTrait, Grapheme};
 
 use std::collections::BTreeMap;
 
 /// Matching open/close brackets from `UnicodeData.txt`
+#[allow(clippy::unicode_not_nfc)]
 pub const MATCHING: &[(&str, &str)] = &[
     ("(", ")"),
     ("[", "]"),
@@ -93,17 +94,19 @@ pub const MATCHING: &[(&str, &str)] = &[
 /**
 Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`
 */
+#[must_use]
 pub fn close() -> BTreeMap<&'static str, &'static str> {
-    MATCHING.iter().cloned().collect()
+    MATCHING.iter().copied().collect()
 }
 
 /**
 Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`
 */
+#[must_use]
 pub fn open() -> BTreeMap<&'static str, &'static str> {
     MATCHING
         .iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }
@@ -112,15 +115,17 @@ pub fn open() -> BTreeMap<&'static str, &'static str> {
 Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
 `UnicodeData.txt`
 */
+#[must_use]
 pub fn matching() -> BTreeMap<&'static str, &'static str> {
     MATCHING
         .iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }
 
 /// Matching open/close brackets from `BidiBrackets.txt`
+#[allow(clippy::unicode_not_nfc)]
 pub const BRACKETS: &[(&str, &str)] = &[
     ("(", ")"),
     ("[", "]"),
@@ -191,17 +196,19 @@ pub const BRACKETS: &[(&str, &str)] = &[
 /**
 Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `BidiBrackets.txt`
 */
+#[must_use]
 pub fn close_brackets() -> BTreeMap<&'static str, &'static str> {
-    BRACKETS.iter().cloned().collect()
+    BRACKETS.iter().copied().collect()
 }
 
 /**
 Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `BidiBrackets.txt`
 */
+#[must_use]
 pub fn open_brackets() -> BTreeMap<&'static str, &'static str> {
     BRACKETS
         .iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }
@@ -210,15 +217,17 @@ pub fn open_brackets() -> BTreeMap<&'static str, &'static str> {
 Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
 `BidiBrackets.txt`
 */
+#[must_use]
 pub fn matching_brackets() -> BTreeMap<&'static str, &'static str> {
     BRACKETS
         .iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }
 
 /// Matching open/close brackets from `BidiMirroring.txt`
+#[allow(clippy::unicode_not_nfc)]
 pub const MIRRORING: &[(&str, &str)] = &[
     ("(", ")"),
     ("<", ">"),
@@ -440,18 +449,20 @@ pub const MIRRORING: &[(&str, &str)] = &[
 Generate a [`BTreeMap`] with the matching close bracket for each open bracket in
 `BidiMirroring.txt`
 */
+#[must_use]
 pub fn close_mirroring() -> BTreeMap<&'static str, &'static str> {
-    MIRRORING.iter().cloned().collect()
+    MIRRORING.iter().copied().collect()
 }
 
 /**
 Generate a [`BTreeMap`] with the matching open bracket for each close bracket in
 `BidiMirroring.txt`
 */
+#[must_use]
 pub fn open_mirroring() -> BTreeMap<&'static str, &'static str> {
     MIRRORING
         .iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }
@@ -460,15 +471,17 @@ pub fn open_mirroring() -> BTreeMap<&'static str, &'static str> {
 Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
 `BidiMirroring.txt`
 */
+#[must_use]
 pub fn matching_mirroring() -> BTreeMap<&'static str, &'static str> {
     MIRRORING
         .iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }
 
 /// Matching open/close brackets from `UnicodeData.txt` and `BidiBrackets.txt`
+#[allow(clippy::unicode_not_nfc)]
 pub const BRACKETS_MATCHING: &[(&str, &str)] = &[
     ("(", ")"),
     ("[", "]"),
@@ -561,18 +574,20 @@ pub const BRACKETS_MATCHING: &[(&str, &str)] = &[
 Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`
 and `BidiBrackets.txt`
 */
+#[must_use]
 pub fn close_brackets_matching() -> BTreeMap<&'static str, &'static str> {
-    BRACKETS_MATCHING.iter().cloned().collect()
+    BRACKETS_MATCHING.iter().copied().collect()
 }
 
 /**
 Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`
 and `BidiBrackets.txt`
 */
+#[must_use]
 pub fn open_brackets_matching() -> BTreeMap<&'static str, &'static str> {
     BRACKETS_MATCHING
         .iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }
@@ -581,15 +596,17 @@ pub fn open_brackets_matching() -> BTreeMap<&'static str, &'static str> {
 Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
 `UnicodeData.txt` and `BidiBrackets.txt`
 */
+#[must_use]
 pub fn matching_brackets_matching() -> BTreeMap<&'static str, &'static str> {
     BRACKETS_MATCHING
         .iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }
 
 /// Matching open/close brackets from `BidiMirroring.txt` and `BidiBrackets.txt`
+#[allow(clippy::unicode_not_nfc)]
 pub const BRACKETS_MIRRORING: &[(&str, &str)] = &[
     ("(", ")"),
     ("<", ">"),
@@ -812,18 +829,20 @@ pub const BRACKETS_MIRRORING: &[(&str, &str)] = &[
 Generate a [`BTreeMap`] with the matching close bracket for each open bracket in
 `BidiMirroring.txt` and `BidiBrackets.txt`
 */
+#[must_use]
 pub fn close_brackets_mirroring() -> BTreeMap<&'static str, &'static str> {
-    BRACKETS_MIRRORING.iter().cloned().collect()
+    BRACKETS_MIRRORING.iter().copied().collect()
 }
 
 /**
 Generate a [`BTreeMap`] with the matching open bracket for each close bracket in
 `BidiMirroring.txt` and `BidiBrackets.txt`
 */
+#[must_use]
 pub fn open_brackets_mirroring() -> BTreeMap<&'static str, &'static str> {
     BRACKETS_MIRRORING
         .iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }
@@ -832,15 +851,17 @@ pub fn open_brackets_mirroring() -> BTreeMap<&'static str, &'static str> {
 Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
 `BidiMirroring.txt` and `BidiBrackets.txt`
 */
+#[must_use]
 pub fn matching_brackets_mirroring() -> BTreeMap<&'static str, &'static str> {
     BRACKETS_MIRRORING
         .iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }
 
 /// Matching open/close brackets from `UnicodeData.txt` and `BidiMirroring.txt`
+#[allow(clippy::unicode_not_nfc)]
 pub const MIRRORING_MATCHING: &[(&str, &str)] = &[
     ("(", ")"),
     ("<", ">"),
@@ -1076,18 +1097,20 @@ pub const MIRRORING_MATCHING: &[(&str, &str)] = &[
 Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`
 and `BidiMirroring.txt`
 */
+#[must_use]
 pub fn close_mirroring_matching() -> BTreeMap<&'static str, &'static str> {
-    MIRRORING_MATCHING.iter().cloned().collect()
+    MIRRORING_MATCHING.iter().copied().collect()
 }
 
 /**
 Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`
 and `BidiMirroring.txt`
 */
+#[must_use]
 pub fn open_mirroring_matching() -> BTreeMap<&'static str, &'static str> {
     MIRRORING_MATCHING
         .iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }
@@ -1096,15 +1119,17 @@ pub fn open_mirroring_matching() -> BTreeMap<&'static str, &'static str> {
 Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
 `UnicodeData.txt` and `BidiMirroring.txt`
 */
+#[must_use]
 pub fn matching_mirroring_matching() -> BTreeMap<&'static str, &'static str> {
     MIRRORING_MATCHING
         .iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }
 
 /// Matching open/close brackets from `UnicodeData.txt`, `BidiBrackets.txt`, and `BidiMirroring.txt`
+#[allow(clippy::unicode_not_nfc)]
 pub const ALL: &[(&str, &str)] = &[
     ("(", ")"),
     ("<", ">"),
@@ -1340,17 +1365,19 @@ pub const ALL: &[(&str, &str)] = &[
 Generate a [`BTreeMap`] with the matching close bracket for each open bracket in `UnicodeData.txt`,
 `BidiBrackets.txt`, and `BidiMirroring.txt`
 */
+#[must_use]
 pub fn close_all() -> BTreeMap<&'static str, &'static str> {
-    ALL.iter().cloned().collect()
+    ALL.iter().copied().collect()
 }
 
 /**
 Generate a [`BTreeMap`] with the matching open bracket for each close bracket in `UnicodeData.txt`,
 `BidiBrackets.txt`, and `BidiMirroring.txt`
 */
+#[must_use]
 pub fn open_all() -> BTreeMap<&'static str, &'static str> {
     ALL.iter()
-        .cloned()
+        .copied()
         .map(|(open, close)| (close, open))
         .collect()
 }
@@ -1359,9 +1386,10 @@ pub fn open_all() -> BTreeMap<&'static str, &'static str> {
 Generate a [`BTreeMap`] with an entry for each pair of opening and closing brackets in
 `UnicodeData.txt`, `BidiBrackets.txt`, and `BidiMirroring.txt`
 */
+#[must_use]
 pub fn matching_all() -> BTreeMap<&'static str, &'static str> {
     ALL.iter()
-        .cloned()
+        .copied()
         .flat_map(|(open, close)| [(open, close), (close, open)])
         .collect()
 }

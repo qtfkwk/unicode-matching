@@ -1,10 +1,10 @@
 [package]
 name = "unicode-matching"
-version = "0.6.3"
+version = "0.6.4"
 edition = "2024"
 description = "Rust library crate to match Unicode open/close brackets"
 license = "MIT"
 repository = "https://github.com/qtfkwk/unicode-matching"
 
 [dependencies]
-gstring = "0.13.1"
+gstring = "0.13.2"
